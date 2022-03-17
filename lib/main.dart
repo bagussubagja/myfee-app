@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfee_app/models/Screen/homepage_screen.dart';
 import 'package:myfee_app/models/Screen/login_screen.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'My Fee App',
       theme: ThemeData(fontFamily: 'Poppins'),
-      home: const LoginScreen(),
+      home: const HomePage(),
     );
   }
 }

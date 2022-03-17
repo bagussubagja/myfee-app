@@ -13,6 +13,23 @@ class FeeCalculate extends StatefulWidget {
 }
 
 class _FeeCalculateState extends State<FeeCalculate> {
+  final TextEditingController nikController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController genderController = TextEditingController();
+  final TextEditingController groupController = TextEditingController();
+  final TextEditingController feePrimaryController = TextEditingController();
+  final TextEditingController allowanceController = TextEditingController();
+  final TextEditingController discountController = TextEditingController();
+  int? num1 = 0, num2 = 0, num3 = 0, result = 0;
+  hitungTotalGaji() {
+    setState(() {
+      num1 = int.parse(feePrimaryController.text);
+      num2 = int.parse(allowanceController.text);
+      num3 = int.parse(discountController.text);
+      result = (num1! + num2!) - num3!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +56,7 @@ class _FeeCalculateState extends State<FeeCalculate> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Calculate',
+                  'Fee Calculate',
                   style: titleStyle,
                 ),
                 const SizedBox(height: 5),
@@ -50,24 +67,52 @@ class _FeeCalculateState extends State<FeeCalculate> {
                 const SizedBox(
                   height: 15,
                 ),
-                InputField(title: 'NIK', hint: '3203xxxxxxxxxxxxxxxxxxxxxxx'),
                 InputField(
-                    title: 'Nama Lengkap', hint: 'e.g Septian Dwi Putra'),
-                InputField(title: 'Jenis Kelamin', hint: 'Pria / Wanita'),
-                InputField(title: 'Golongan', hint: 'Pria / Wanita'),
-                InputField(title: 'Gaji Pokok', hint: 'Rpxxxxxxxx'),
-                InputField(title: 'Tunjangan', hint: 'Rpxxxxxxxx'),
-                InputField(title: 'Potongan', hint: 'Rpxxxxxxxx'),
+                  title: 'NIK',
+                  hint: '3203xxxxxxxxxxxxxxxxxxxxxxx',
+                  controller: nikController,
+                ),
+                InputField(
+                  title: 'Nama Lengkap',
+                  hint: 'e.g Septian Dwi Putra',
+                  controller: nameController,
+                ),
+                InputField(
+                  title: 'Jenis Kelamin',
+                  hint: 'Pria / Wanita',
+                  controller: genderController,
+                ),
+                InputField(
+                  title: 'Golongan',
+                  hint: 'Golongan 1-4',
+                  controller: groupController,
+                ),
+                InputField(
+                    title: 'Gaji Pokok (dalam Rupiah)',
+                    hint: '123xxxxxxx',
+                    controller: feePrimaryController),
+                InputField(
+                    title: 'Tunjangan (dalam Rupiah)',
+                    hint: '123xxxxxxx',
+                    controller: allowanceController),
+                InputField(
+                    title: 'Potongan (dalam Rupiah)',
+                    hint: '123xxxxxxx',
+                    controller: discountController),
                 SizedBox(
                   height: 25,
                 ),
                 Center(
                   child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return HomePage();
-                        }));
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) {
+                        //   return HomePage();
+                        // }));
+                        hitungTotalGaji();
+                        feePrimaryController.clear();
+                        allowanceController.clear();
+                        discountController.clear();
                       },
                       style: ElevatedButton.styleFrom(
                           primary: greenMint,
@@ -77,6 +122,15 @@ class _FeeCalculateState extends State<FeeCalculate> {
                         'Hitung Gaji Pokok',
                         style: primaryTextStyle.copyWith(color: Colors.white),
                       )),
+                ),
+                Center(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  child: Column(children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text('Total Gaji : Rp$result'),
+                  ]),
                 ),
                 SizedBox(
                   height: 25,

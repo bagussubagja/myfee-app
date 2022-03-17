@@ -8,13 +8,11 @@ class InputField extends StatelessWidget {
       {Key? key,
       required this.title,
       required this.hint,
-      this.controller,
-      this.widget})
+      required this.controller})
       : super(key: key);
   final String title;
   final String hint;
-  final TextEditingController? controller;
-  final Widget? widget;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +38,14 @@ class InputField extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextFormField(
-                      readOnly: widget == null ? false : true,
                       autofocus: false,
                       cursorColor: greenMint,
                       controller: controller,
                       style: primaryTextStyle,
                       decoration: InputDecoration(
                         hintText: hint,
-                        hintStyle: primaryTextStyle,
+                        hintStyle: primaryTextStyle.copyWith(
+                            fontSize: 14, color: Color(0xffCCCCCC)),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
                               BorderSide(color: Colors.transparent, width: 0),
@@ -59,11 +57,6 @@ class InputField extends StatelessWidget {
                       ),
                     ),
                   ),
-                  widget == null
-                      ? Container()
-                      : Container(
-                          child: widget,
-                        )
                 ],
               ))
         ],
