@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myfee_app/models/Screen/homepage_screen.dart';
 import 'package:myfee_app/models/Widgets/login_button.dart';
 import 'package:myfee_app/theme.dart';
 
@@ -22,7 +25,7 @@ class LoginScreen extends StatelessWidget {
           const SizedBox(height: 5),
           Text(
             'MyFee - Your Fee Solution',
-            style: textStyle,
+            style: primaryTextStyle,
           ),
           const SizedBox(
             height: 50,
@@ -37,53 +40,33 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Text(
                   'Select your login method : ',
-                  style: textStyle,
+                  style: primaryTextStyle,
                 )
               ],
             ),
           ),
           const LoginButton(
-              imgLogo: 'assets/images/google.png',
-              hintText: 'Sign In With Google'),
+            imgLogo: 'assets/images/google.png',
+            hintText: 'Sign In With Google',
+            widget: HomePage(),
+          ),
           const SizedBox(
             height: 15,
           ),
           Center(
             child: Text(
               'or',
-              style: textStyle,
+              style: primaryTextStyle,
             ),
           ),
           const SizedBox(
             height: 10,
           ),
           const LoginButton(
-              imgLogo: 'assets/images/twitter.png',
-              hintText: 'Sign In With Twitter')
-          // Container(
-          //   margin: const EdgeInsets.only(top: 10),
-          //   height: 50,
-          //   width: double.infinity,
-          //   child: ElevatedButton(
-          //       onPressed: () {},
-          //       style: ElevatedButton.styleFrom(
-          //           primary: greyLightColor,
-          //           elevation: 0,
-          //           padding: const EdgeInsets.only(left: 50, right: 50)),
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //         children: [
-          //           Image.asset(
-          //             'assets/images/google.png',
-          //             scale: 30,
-          //           ),
-          //           Text(
-          //             'Sign In With Google',
-          //             style: textStyle,
-          //           )
-          //         ],
-          //       )),
-          // )
+            imgLogo: 'assets/images/twitter.png',
+            hintText: 'Sign In With Twitter',
+            widget: HomePage(),
+          )
         ],
       ),
     )));

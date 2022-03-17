@@ -10,5 +10,5 @@ Color greyLightColor = const Color(0xffEEEEEE);
 
 TextStyle titleStyle =
     TextStyle(color: blackMain, fontSize: 24, fontWeight: FontWeight.w700);
-TextStyle textStyle =
+TextStyle primaryTextStyle =
     TextStyle(fontSize: 16, color: blackText, fontWeight: FontWeight.w400);
