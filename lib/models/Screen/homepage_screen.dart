@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const Spacer(),
                     SizedBox(
-                      height: 75,
-                      width: 75,
+                      height: 65,
+                      width: 65,
                       child: Image.asset('assets/images/profile.png'),
                     )
                   ],

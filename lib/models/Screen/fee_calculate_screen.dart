@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:myfee_app/models/Screen/homepage_screen.dart';
 import 'package:myfee_app/models/Widgets/input_field.dart';
 import 'package:myfee_app/theme.dart';
 
@@ -20,13 +18,13 @@ class _FeeCalculateState extends State<FeeCalculate> {
   final TextEditingController feePrimaryController = TextEditingController();
   final TextEditingController allowanceController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
-  int? num1 = 0, num2 = 0, num3 = 0, result = 0;
+  int? _gajiPokok = 0, _tunjangan = 0, _potongan = 0, _gajiTotal = 0;
   hitungTotalGaji() {
     setState(() {
-      num1 = int.parse(feePrimaryController.text);
-      num2 = int.parse(allowanceController.text);
-      num3 = int.parse(discountController.text);
-      result = (num1! + num2!) - num3!;
+      _gajiPokok = int.parse(feePrimaryController.text);
+      _tunjangan = int.parse(allowanceController.text);
+      _potongan = int.parse(discountController.text);
+      _gajiTotal = (_gajiPokok! + _tunjangan!) - _potongan!;
     });
   }
 
@@ -103,25 +101,31 @@ class _FeeCalculateState extends State<FeeCalculate> {
                   height: 25,
                 ),
                 Center(
-                  child: ElevatedButton(
-                      onPressed: () {
-                        // Navigator.push(context,
-                        //     MaterialPageRoute(builder: (context) {
-                        //   return HomePage();
-                        // }));
-                        hitungTotalGaji();
-                        feePrimaryController.clear();
-                        allowanceController.clear();
-                        discountController.clear();
-                      },
-                      style: ElevatedButton.styleFrom(
-                          primary: greenMint,
-                          elevation: 0,
-                          padding: const EdgeInsets.only(left: 50, right: 50)),
-                      child: Text(
-                        'Hitung Gaji Pokok',
-                        style: primaryTextStyle.copyWith(color: Colors.white),
-                      )),
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                          onPressed: () {
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: (context) {
+                            //   return HomePage();
+                            // }));
+                            hitungTotalGaji();
+                            feePrimaryController.clear();
+                            allowanceController.clear();
+                            discountController.clear();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: greenMint,
+                              elevation: 0,
+                              padding:
+                                  const EdgeInsets.only(left: 50, right: 50)),
+                          child: Text(
+                            'Hitung Gaji Pokok',
+                            style:
+                                primaryTextStyle.copyWith(color: Colors.white),
+                          )),
+                    ],
+                  ),
                 ),
                 Center(
                   // ignore: prefer_const_literals_to_create_immutables
@@ -129,7 +133,7 @@ class _FeeCalculateState extends State<FeeCalculate> {
                     SizedBox(
                       height: 15,
                     ),
-                    Text('Total Gaji : Rp$result'),
+                    Text('Total Gaji : Rp$_gajiTotal'),
                   ]),
                 ),
                 SizedBox(
