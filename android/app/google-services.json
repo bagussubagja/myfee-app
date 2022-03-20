@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "865190284223",
+    "project_id": "myfee-app",
+    "storage_bucket": "myfee-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865190284223:android:2d40ccedecfa4e95a62f0a",
+        "android_client_info": {
+          "package_name": "com.example.myfee_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865190284223-idubuj60gi4k47b68u2fskap9u8acgr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeILHRfbs_1pIWy4KKeCAEufqo8c-BGNs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "865190284223-idubuj60gi4k47b68u2fskap9u8acgr2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

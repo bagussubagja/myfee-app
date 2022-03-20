@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myfee_app/models/Screen/homepage_screen.dart';
 import 'package:myfee_app/models/Widgets/login_button.dart';
+import 'package:myfee_app/page_state.dart';
 import 'package:myfee_app/theme.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -48,7 +49,7 @@ class LoginScreen extends StatelessWidget {
           const LoginButton(
             imgLogo: 'assets/images/google.png',
             hintText: 'Sign In With Google',
-            widget: HomePage(),
+            widget: PageState(),
           ),
           const SizedBox(
             height: 15,
@@ -65,7 +66,7 @@ class LoginScreen extends StatelessWidget {
           const LoginButton(
             imgLogo: 'assets/images/twitter.png',
             hintText: 'Sign In With Twitter',
-            widget: HomePage(),
+            widget: PageState(),
           )
         ],
       ),

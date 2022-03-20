@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:myfee_app/provider/google_sign_in.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -67,7 +68,11 @@ class NavBar extends StatelessWidget {
           ListTile(
             title: Text('Exit'),
             leading: Icon(Icons.exit_to_app),
-            onTap: () => null,
+            onTap: () {
+              final provider =
+                  Provider.of<GoogleSignInProvider>(context, listen: false);
+              provider.logout();
+            },
           ),
         ],
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myfee_app/provider/google_sign_in.dart';
 import 'package:myfee_app/theme.dart';
+import 'package:provider/provider.dart';
 
 class LoginButton extends StatelessWidget {
   const LoginButton(
@@ -20,6 +22,9 @@ class LoginButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
           onPressed: () {
+            final provider =
+                Provider.of<GoogleSignInProvider>(context, listen: false);
+            provider.googleLogin();
             Navigator.push(context, MaterialPageRoute(builder: (context) {
               return widget;
             }));

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myfee_app/models/Screen/fee_calculate_screen.dart';
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,16 +50,15 @@ class _HomePageState extends State<HomePage> {
                           style: primaryTextStyle.copyWith(fontSize: 22),
                         ),
                         Text(
-                          'Bagus Subagja',
+                          user.displayName!,
                           style: titleStyle,
                         )
                       ],
                     ),
                     const Spacer(),
-                    SizedBox(
-                      height: 65,
-                      width: 65,
-                      child: Image.asset('assets/images/profile.png'),
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundImage: NetworkImage(user.photoURL!),
                     )
                   ],
                 ),
