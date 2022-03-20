@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:myfee_app/models/Employee.dart';
 import 'package:myfee_app/models/Widgets/input_field.dart';
 import 'package:myfee_app/theme.dart';
 
@@ -18,7 +20,9 @@ class _FeeCalculateState extends State<FeeCalculate> {
   final TextEditingController feePrimaryController = TextEditingController();
   final TextEditingController allowanceController = TextEditingController();
   final TextEditingController discountController = TextEditingController();
+  final TextEditingController feeTotalController = TextEditingController();
   int? _gajiPokok = 0, _tunjangan = 0, _potongan = 0, _gajiTotal = 0;
+  int? totalResult;
   hitungTotalGaji() {
     setState(() {
       _gajiPokok = int.parse(feePrimaryController.text);
@@ -110,9 +114,33 @@ class _FeeCalculateState extends State<FeeCalculate> {
                             //   return HomePage();
                             // }));
                             hitungTotalGaji();
-                            feePrimaryController.clear();
-                            allowanceController.clear();
-                            discountController.clear();
+                            setState(() {
+                              feeTotalController.text = _gajiTotal.toString();
+                            });
+                            // int.parse(feeTotalController.text);
+                            // feePrimaryController.clear();
+                            // allowanceController.clear();
+                            // discountController.clear();
+                            final employee = Employee(
+                                nik: nikController.text,
+                                nama: nameController.text,
+                                jenisKelamin: genderController.text,
+                                golongan: groupController.text,
+                                gajiPokok: int.parse(feePrimaryController.text),
+                                tunjangan: int.parse(allowanceController.text),
+                                potongan: int.parse(discountController.text),
+                                totalGaji: int.parse(feeTotalController.text));
+                            createKaryawan(employee);
+                            // createEmployee(
+                            //   nik: nikController.text,
+                            //   nama: nameController.text,
+                            //   jenisKelamin: genderController.text,
+                            //   golongan: groupController.text,
+                            //   gajiPokok: int.parse(feePrimaryController.text),
+                            //   tunjangan: int.parse(allowanceController.text),
+                            //   potongan: int.parse(discountController.text),
+                            //   totalGaji: int.parse(feeTotalController.text)
+                            // );
                           },
                           style: ElevatedButton.styleFrom(
                               primary: greenMint,
@@ -147,3 +175,44 @@ class _FeeCalculateState extends State<FeeCalculate> {
     );
   }
 }
+
+// Future createEmployee(
+//     {required String nik,
+//     required String nama,
+//     required String jenisKelamin,
+//     required String golongan,
+//     required int gajiPokok,
+//     required int tunjangan,
+//     required int potongan,
+//     required int totalGaji}) async {
+//   final docEmployee = FirebaseFirestore.instance.collection('karyawan').doc();
+//   final employee = Employee(
+//       id: docEmployee.id,
+//       nik: nik,
+//       nama: nama,
+//       jenisKelamin: jenisKelamin,
+//       golongan: golongan,
+//       gajiPokok: gajiPokok,
+//       tunjangan: tunjangan,
+//       potongan: potongan,
+//       totalGaji: totalGaji);
+//   final json = employee.toJson();
+//   await docEmployee.set(json);
+// }
+
+
+
+Stream<List<Employee>> readKaryawan() => FirebaseFirestore.instance
+    .collection('karyawan')
+    .snapshots()
+    .map((snapshot) =>
+        snapshot.docs.map((doc) => Employee.fromJson(doc.data())).toList());
+
+Future createKaryawan(Employee employee) async {
+  final docKaryawan = FirebaseFirestore.instance.collection('karyawan').doc();
+  employee.id = docKaryawan.id;
+
+  final json = employee.toJson();
+  await docKaryawan.set(json);
+}
+
