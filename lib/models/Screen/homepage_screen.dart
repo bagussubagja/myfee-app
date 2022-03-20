@@ -69,13 +69,17 @@ class _HomePageState extends State<HomePage> {
                 StreamBuilder<List<Employee>>(
                     stream: readKaryawan(),
                     builder: (context, snapshot) {
-                      if (snapshot.hasError) {
+                      if (snapshot.connectionState == ConnectionState.active && snapshot.hasError) {
                         return Text('Something error!');
                       } else if (snapshot.hasData) {
-                        final employees = snapshot.data!;
-                        return ListView(
-                          children: employees.map(buildEmployee).toList(),
-                        );
+                        try {
+                          final employees = snapshot.data!;
+                          return ListView(
+                            children: employees.map(buildEmployee).toList(),
+                          );
+                        } catch (e) {
+                          return Text(e.toString());
+                        }
                       } else {
                         return Center(
                           child: Column(
