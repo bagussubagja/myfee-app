@@ -1,16 +1,11 @@
-# myfee_app
+# MyFee App
 
-A new Flutter project.
+MyFee adalah sebuah aplikasi yang diciptakan untuk tujuan memenuhi tugas matakuliah Konstruksi Perangkat Lunak (KPL) program studi Rekayasa Perangkat Lunak Kampus UPI di Cibiru.
 
-## Getting Started
+## Aplikasi ini dibangun oleh framework Flutter
 
-This project is a starting point for a Flutter application.
+Bagus Subagja - 2008315
+4B - Rekayasa Perangkat Lunak
+Universitas Pendidikan Indonesia
+Kampus UPI di Cibiru
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
