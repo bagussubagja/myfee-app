@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print, use_rethrow_when_possible
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:myfee_app/models/Employee.dart';
@@ -113,6 +113,11 @@ class _FeeCalculateState extends State<FeeCalculate> {
                             //     MaterialPageRoute(builder: (context) {
                             //   return HomePage();
                             // }));
+                            final snackBar = SnackBar(
+                                content:
+                                    Text('Data telah tersimpan pada database'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                             hitungTotalGaji();
                             setState(() {
                               feeTotalController.text = _gajiTotal.toString();
@@ -152,6 +157,20 @@ class _FeeCalculateState extends State<FeeCalculate> {
                             style:
                                 primaryTextStyle.copyWith(color: Colors.white),
                           )),
+                      ElevatedButton(
+                          onPressed: () {
+                            openDialog(context);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: greenMint,
+                              elevation: 0,
+                              padding:
+                                  const EdgeInsets.only(left: 50, right: 50)),
+                          child: Text(
+                            'Tampilkan Data Karyawan',
+                            style:
+                                primaryTextStyle.copyWith(color: Colors.white),
+                          )),
                     ],
                   ),
                 ),
@@ -174,6 +193,51 @@ class _FeeCalculateState extends State<FeeCalculate> {
       ),
     );
   }
+
+  Future openDialog(BuildContext context) => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text('Data Karyawan'),
+            content:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text('Nama : ' + nameController.text),
+              SizedBox(
+                height: 10,
+              ),
+              Text('NIK : ' + nikController.text),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Jenis Kelamin : ' + genderController.text),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Golongan : ' + groupController.text),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Gaji Pokok : Rp' + feePrimaryController.text),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Tunjangan : Rp' + allowanceController.text),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Gaji Pokok : Rp' + discountController.text),
+              SizedBox(
+                height: 10,
+              ),
+              Text('Gaji Pokok : Rp' + _gajiTotal.toString()),
+            ]),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Ok'))
+            ],
+          ));
 }
 
 // Future createEmployee(
@@ -200,13 +264,21 @@ class _FeeCalculateState extends State<FeeCalculate> {
 //   await docEmployee.set(json);
 // }
 
-
-
-Stream<List<Employee>> readKaryawan() => FirebaseFirestore.instance
-    .collection('karyawan')
-    .snapshots()
-    .map((snapshot) =>
-        snapshot.docs.map((doc) => Employee.fromJson(doc.data())).toList());
+Stream<List<Employee>> readKaryawan() {
+  try {
+    return FirebaseFirestore.instance
+        .collection('karyawan')
+        .snapshots()
+        .map((snapshot) {
+      print(snapshot);
+      return [];
+      // return snapshot.docs.map((doc) => Employee.fromJson(doc.data()).toList());
+    });
+  } catch (e) {
+    print('$e readKaryawan()');
+    throw e;
+  }
+}
 
 Future createKaryawan(Employee employee) async {
   final docKaryawan = FirebaseFirestore.instance.collection('karyawan').doc();
@@ -215,4 +287,3 @@ Future createKaryawan(Employee employee) async {
   final json = employee.toJson();
   await docKaryawan.set(json);
 }
-

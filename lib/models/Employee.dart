@@ -1,15 +1,15 @@
 // ignore_for_file: file_names
 
 class Employee {
-  String id = '';
-  final String nik;
-  final String nama;
-  final String jenisKelamin;
-  final String golongan;
-  final int gajiPokok;
-  final int tunjangan;
-  final int potongan;
-  final int totalGaji;
+  String? id = '';
+  final String? nik;
+  final String? nama;
+  final String? jenisKelamin;
+  final String? golongan;
+  final int? gajiPokok;
+  final int? tunjangan;
+  final int? potongan;
+  final int? totalGaji;
 
   Employee(
       {this.id = '',
@@ -34,13 +34,15 @@ class Employee {
         'totalGaji': totalGaji,
       };
 
-  static Employee fromJson(Map<String, dynamic> json) => Employee(
-      nik: json['nik'],
-      nama: json['nama'],
-      jenisKelamin: json['jenisKelamin'],
-      golongan: json['golongan'],
-      gajiPokok: json['gajiPokok'],
-      tunjangan: json['tunjangan'],
-      potongan: json['potongan'],
-      totalGaji: json['totalGaji']);
+  static Employee fromJson(Map<String, dynamic> json) {
+    return Employee(
+        nik: json['nik'],
+        nama: json['nama'],
+        jenisKelamin: json['jenisKelamin'],
+        golongan: json['golongan'] ?? '',
+        gajiPokok: json['gajiPokok'],
+        tunjangan: json['tunjangan'],
+        potongan: json['potongan'],
+        totalGaji: json['totalGaji']);
+  }
 }
