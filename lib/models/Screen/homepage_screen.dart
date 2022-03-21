@@ -3,7 +3,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myfee_app/models/Employee.dart';
 import 'package:myfee_app/models/Screen/fee_calculate_screen.dart';
 import 'package:myfee_app/models/Widgets/navbar.dart';
@@ -66,11 +65,14 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             SizedBox(
-              height: 15,
+              height: 10,
             ),
             Text(
               'Riwayat Perhitungan Gaji',
-              style: primaryTextStyle,
+              style: primaryTextStyle.copyWith(color: blackMain),
+            ),
+            SizedBox(
+              height: 15,
             ),
             StreamBuilder<List<Employee>>(
                 stream: readKaryawan(),
@@ -102,140 +104,27 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// Stream<List<Employee>> readKaryawan() => FirebaseFirestore.instance
-//     .collection('karyawan')
-//     .snapshots()
-//     .map((snapshot) =>
-//         snapshot.docs.map((doc) => Employee.fromJson(doc.data())).toList());
 Stream<List<Employee>> readKaryawan() {
   return FirebaseFirestore.instance
       .collection('karyawan')
       .snapshots()
       .map((snapshot) {
-    // return [];
     return snapshot.docs.map((e) => Employee.fromJson(e.data())).toList();
-    // return snapshot.docs.map((doc) => Employee.fromJson(doc.data()).toList());
   });
 }
 
-Widget buildEmployee(Employee employee) => ListTile(
-      // leading: CircleAvatar(child: Text(employee.golongan!)),
-      title: Text('Nama : ' + employee.nama!),
-      subtitle: Text('Gaji Total : Rp' + employee.totalGaji.toString()),
+Widget buildEmployee(Employee employee) => Container(
+      margin: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          color: yellowColor, borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        title: Text('Nama     : ' + employee.nama!),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('NIK             : ' + employee.nik!),
+            Text('Gaji Total : Rp' + employee.totalGaji.toString()),
+          ],
+        ),
+      ),
     );
-
-
-// StreamBuilder<List<Employee>>(
-//                     stream: readKaryawan(),
-//                     builder: (context, snapshot) {
-//                       if (snapshot.hasError) {
-//                         return Text('Something error!');
-//                       } else if (snapshot.hasData) {
-//                         final employees = snapshot.data!;
-//                         return ListView(
-//                           children: employees.map(buildEmployee).toList(),
-//                         );
-//                       } else {
-//                         return Center(
-//                           child: Column(
-//                             children: [
-//                               const SizedBox(
-//                                 height: 40,
-//                               ),
-//                               Text(
-//                                 'Histori Terakhir',
-//                                 textAlign: TextAlign.center,
-//                                 style: primaryTextStyle,
-//                               ),
-//                               SizedBox(
-//                                 height: 300,
-//                                 width: 300,
-//                                 child: SvgPicture.asset(
-//                                     'assets/svg/history_empty.svg'),
-//                               ),
-//                               Text(
-//                                 'Tidak ada histori disini....',
-//                                 style: primaryTextStyle,
-//                               )
-//                             ],
-//                           ),
-//                         );
-//                       }
-//                     }),
-
-// Padding(
-//             padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-                
-//               ],
-//             ),
-//           ),
-// Row(
-//                   children: [
-//                     Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           'Hallo,',
-//                           style: primaryTextStyle.copyWith(fontSize: 22),
-//                         ),
-//                         Text(
-//                           user.displayName!,
-//                           style: titleStyle,
-//                         )
-//                       ],
-//                     ),
-//                     const Spacer(),
-//                     CircleAvatar(
-//                       radius: 35,
-//                       backgroundImage: NetworkImage(user.photoURL!),
-//                     )
-//                   ],
-//                 ),
-//                 StreamBuilder<List<Employee>>(
-//                     stream: readKaryawan(),
-//                     builder: (context, snapshot) {
-//                       print(snapshot);
-//                       try {
-//                         if (snapshot.hasError) {
-//                           return Text('Something error!');
-//                         }
-//                         if (snapshot.hasData) {
-//                           final employees = snapshot.data!;
-//                           return ListView(
-//                             children: employees.map(buildEmployee).toList(),
-//                           );
-//                         } else {
-//                           return Center(
-//                             child: Column(
-//                               children: [
-//                                 const SizedBox(
-//                                   height: 40,
-//                                 ),
-//                                 Text(
-//                                   'Histori Terakhir',
-//                                   textAlign: TextAlign.center,
-//                                   style: primaryTextStyle,
-//                                 ),
-//                                 SizedBox(
-//                                   height: 300,
-//                                   width: 300,
-//                                   child: SvgPicture.asset(
-//                                       'assets/svg/history_empty.svg'),
-//                                 ),
-//                                 Text(
-//                                   'Tidak ada histori disini....',
-//                                   style: primaryTextStyle,
-//                                 )
-//                               ],
-//                             ),
-//                           );
-//                         }
-//                       } catch (e) {
-//                         // print(e.toString());
-//                         return Text(e.toString());
-//                       }
-//                     }),

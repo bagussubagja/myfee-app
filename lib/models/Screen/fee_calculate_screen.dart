@@ -22,6 +22,10 @@ class _FeeCalculateState extends State<FeeCalculate> {
   final TextEditingController discountController = TextEditingController();
   final TextEditingController feeTotalController = TextEditingController();
   int? _gajiPokok = 0, _tunjangan = 0, _potongan = 0, _gajiTotal = 0;
+  int gajiGol1 = 10000000,
+      gajiGol2 = 15000000,
+      gajiGol3 = 20000000,
+      gajiGol4 = 25000000;
   int? totalResult;
   hitungTotalGaji() {
     setState(() {
@@ -70,34 +74,40 @@ class _FeeCalculateState extends State<FeeCalculate> {
                   height: 15,
                 ),
                 InputField(
+                  maxLength: 16,
+                  keyboardType: TextInputType.number,
                   title: 'NIK',
-                  hint: '3203xxxxxxxxxxxxxxxxxxxxxxx',
+                  hint: '3203xxxxxxxxxxxx',
                   controller: nikController,
                 ),
                 InputField(
+                  maxLength: 50,
                   title: 'Nama Lengkap',
-                  hint: 'e.g Septian Dwi Putra',
+                  hint: 'mis. Bagus Subagja',
                   controller: nameController,
                 ),
                 InputField(
+                  maxLength: 6,
                   title: 'Jenis Kelamin',
                   hint: 'Pria / Wanita',
                   controller: genderController,
                 ),
                 InputField(
+                  keyboardType: TextInputType.number,
+                  maxLength: 1,
                   title: 'Golongan',
                   hint: 'Golongan 1-4',
                   controller: groupController,
                 ),
                 InputField(
-                    title: 'Gaji Pokok (dalam Rupiah)',
-                    hint: '123xxxxxxx',
-                    controller: feePrimaryController),
-                InputField(
+                    keyboardType: TextInputType.number,
+                    maxLength: 50,
                     title: 'Tunjangan (dalam Rupiah)',
                     hint: '123xxxxxxx',
                     controller: allowanceController),
                 InputField(
+                    keyboardType: TextInputType.number,
+                    maxLength: 50,
                     title: 'Potongan (dalam Rupiah)',
                     hint: '123xxxxxxx',
                     controller: discountController),
@@ -109,56 +119,32 @@ class _FeeCalculateState extends State<FeeCalculate> {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return HomePage();
-                            // }));
-                            final snackBar = SnackBar(
-                                content:
-                                    Text('Data telah tersimpan pada database'));
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            print(int.parse(groupController.text));
+                            if (int.parse(groupController.text) == 1) {
+                              setState(() {
+                                feePrimaryController.text = gajiGol1.toString();
+                              });
+                            } else if (int.parse(groupController.text) == 2) {
+                              setState(() {
+                                feePrimaryController.text = gajiGol2.toString();
+                              });
+                            } else if (int.parse(groupController.text) == 3) {
+                              setState(() {
+                                feePrimaryController.text = gajiGol3.toString();
+                              });
+                            } else if (int.parse(groupController.text) == 4) {
+                              setState(() {
+                                feePrimaryController.text = gajiGol4.toString();
+                              });
+                            } else {
+                              setState(() {
+                                feePrimaryController.text = 0.toString();
+                              });
+                            }
                             hitungTotalGaji();
                             setState(() {
                               feeTotalController.text = _gajiTotal.toString();
                             });
-                            // int.parse(feeTotalController.text);
-                            // feePrimaryController.clear();
-                            // allowanceController.clear();
-                            // discountController.clear();
-                            final employee = Employee(
-                                nik: nikController.text,
-                                nama: nameController.text,
-                                jenisKelamin: genderController.text,
-                                golongan: groupController.text,
-                                gajiPokok: int.parse(feePrimaryController.text),
-                                tunjangan: int.parse(allowanceController.text),
-                                potongan: int.parse(discountController.text),
-                                totalGaji: int.parse(feeTotalController.text));
-                            createKaryawan(employee);
-                            // createEmployee(
-                            //   nik: nikController.text,
-                            //   nama: nameController.text,
-                            //   jenisKelamin: genderController.text,
-                            //   golongan: groupController.text,
-                            //   gajiPokok: int.parse(feePrimaryController.text),
-                            //   tunjangan: int.parse(allowanceController.text),
-                            //   potongan: int.parse(discountController.text),
-                            //   totalGaji: int.parse(feeTotalController.text)
-                            // );
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: greenMint,
-                              elevation: 0,
-                              padding:
-                                  const EdgeInsets.only(left: 50, right: 50)),
-                          child: Text(
-                            'Hitung Gaji Pokok',
-                            style:
-                                primaryTextStyle.copyWith(color: Colors.white),
-                          )),
-                      ElevatedButton(
-                          onPressed: () {
                             openDialog(context);
                           },
                           style: ElevatedButton.styleFrom(
@@ -171,6 +157,60 @@ class _FeeCalculateState extends State<FeeCalculate> {
                             style:
                                 primaryTextStyle.copyWith(color: Colors.white),
                           )),
+                      ElevatedButton(
+                          onPressed: () {
+                            print(int.parse(groupController.text));
+                            if (int.parse(groupController.text) == 1) {
+                              setState(() {
+                                feePrimaryController.text = gajiGol1.toString();
+                              });
+                            } else if (int.parse(groupController.text) == 2) {
+                              setState(() {
+                                feePrimaryController.text = gajiGol2.toString();
+                              });
+                            } else if (int.parse(groupController.text) == 3) {
+                              setState(() {
+                                feePrimaryController.text = gajiGol3.toString();
+                              });
+                            } else if (int.parse(groupController.text) == 4) {
+                              setState(() {
+                                feePrimaryController.text = gajiGol4.toString();
+                              });
+                            } else {
+                              setState(() {
+                                feePrimaryController.text = 0.toString();
+                              });
+                            }
+                            final snackBar = SnackBar(
+                                content:
+                                    Text('Data telah tersimpan pada database'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                            hitungTotalGaji();
+                            setState(() {
+                              feeTotalController.text = _gajiTotal.toString();
+                            });
+                            final employee = Employee(
+                                nik: nikController.text,
+                                nama: nameController.text,
+                                jenisKelamin: genderController.text,
+                                golongan: groupController.text,
+                                gajiPokok: int.parse(feePrimaryController.text),
+                                tunjangan: int.parse(allowanceController.text),
+                                potongan: int.parse(discountController.text),
+                                totalGaji: int.parse(feeTotalController.text));
+                            createKaryawan(employee);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: greenMint,
+                              elevation: 0,
+                              padding:
+                                  const EdgeInsets.only(left: 50, right: 50)),
+                          child: Text(
+                            'Simpan Data Karyawan',
+                            style:
+                                primaryTextStyle.copyWith(color: Colors.white),
+                          )),
                     ],
                   ),
                 ),
@@ -180,7 +220,7 @@ class _FeeCalculateState extends State<FeeCalculate> {
                     SizedBox(
                       height: 15,
                     ),
-                    Text('Total Gaji : Rp$_gajiTotal'),
+                    Text('Total Gaji : Rp' + feeTotalController.text),
                   ]),
                 ),
                 SizedBox(
@@ -228,41 +268,30 @@ class _FeeCalculateState extends State<FeeCalculate> {
               SizedBox(
                 height: 10,
               ),
-              Text('Gaji Pokok : Rp' + _gajiTotal.toString()),
+              Text('Gaji Pokok : Rp' + feeTotalController.text),
             ]),
             actions: [
               TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text('Ok'))
+                  child: Text('Ok')),
+              TextButton(
+                  onPressed: () {
+                    nikController.clear();
+                    nameController.clear();
+                    genderController.clear();
+                    groupController.clear();
+                    feePrimaryController.clear();
+                    allowanceController.clear();
+                    discountController.clear();
+                    feeTotalController.clear();
+                    Navigator.pop(context);
+                  },
+                  child: Text('Hapus Data'))
             ],
           ));
 }
-
-// Future createEmployee(
-//     {required String nik,
-//     required String nama,
-//     required String jenisKelamin,
-//     required String golongan,
-//     required int gajiPokok,
-//     required int tunjangan,
-//     required int potongan,
-//     required int totalGaji}) async {
-//   final docEmployee = FirebaseFirestore.instance.collection('karyawan').doc();
-//   final employee = Employee(
-//       id: docEmployee.id,
-//       nik: nik,
-//       nama: nama,
-//       jenisKelamin: jenisKelamin,
-//       golongan: golongan,
-//       gajiPokok: gajiPokok,
-//       tunjangan: tunjangan,
-//       potongan: potongan,
-//       totalGaji: totalGaji);
-//   final json = employee.toJson();
-//   await docEmployee.set(json);
-// }
 
 Stream<List<Employee>> readKaryawan() {
   try {
