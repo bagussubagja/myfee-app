@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myfee_app/models/Screen/about_screen.dart';
+import 'package:myfee_app/models/Screen/tutorial_page.dart';
 import 'package:myfee_app/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -29,16 +30,25 @@ class NavBar extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.info_outlined),
-            title: Text('About This App'),
+            title: Text('About'),
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return AboutPage();
               }));
             },
           ),
+          ListTile(
+            leading: Icon(Icons.help_outline_rounded),
+            title: Text('Tutorial'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return TutorialPage();
+              }));
+            },
+          ),
           Divider(),
           ListTile(
-            title: Text('Exit'),
+            title: Text('Sign Out'),
             leading: Icon(Icons.exit_to_app),
             onTap: () {
               final provider =
