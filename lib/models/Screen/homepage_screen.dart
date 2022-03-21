@@ -1,6 +1,9 @@
+// ignore_for_file: prefer_const_constructors, avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myfee_app/models/Employee.dart';
 import 'package:myfee_app/models/Screen/fee_calculate_screen.dart';
 import 'package:myfee_app/models/Widgets/navbar.dart';
 import 'package:myfee_app/theme.dart';
@@ -34,60 +37,94 @@ class _HomePageState extends State<HomePage> {
           child: const Icon(Icons.add),
         ),
         body: SafeArea(
-            child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+          children: [
+            Row(
               children: [
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Hallo,',
-                          style: primaryTextStyle.copyWith(fontSize: 22),
-                        ),
-                        Text(
-                          user.displayName!,
-                          style: titleStyle,
-                        )
-                      ],
+                    Text(
+                      'Hallo,',
+                      style: primaryTextStyle.copyWith(fontSize: 22),
                     ),
-                    const Spacer(),
-                    CircleAvatar(
-                      radius: 35,
-                      backgroundImage: NetworkImage(user.photoURL!),
+                    Text(
+                      user.displayName!,
+                      style: titleStyle.copyWith(fontSize: 20),
                     )
                   ],
                 ),
-                Center(
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Text(
-                        'Histori Terakhir',
-                        textAlign: TextAlign.center,
-                        style: primaryTextStyle,
-                      ),
-                      SizedBox(
-                        height: 300,
-                        width: 300,
-                        child: SvgPicture.asset('assets/svg/history_empty.svg'),
-                      ),
-                      Text(
-                        'Tidak ada histori disini....',
-                        style: primaryTextStyle,
-                      )
-                    ],
-                  ),
+                const Spacer(),
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage: NetworkImage(user.photoURL!),
                 )
               ],
             ),
-          ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Riwayat Perhitungan Gaji',
+              style: primaryTextStyle.copyWith(color: blackMain),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            StreamBuilder<List<Employee>>(
+                stream: readKaryawan(),
+                builder: (context, snapshot) {
+                  print(snapshot);
+                  try {
+                    if (snapshot.hasError) {
+                      return Text('Something error ${snapshot.error}!');
+                    } else if (snapshot.hasData) {
+                      final employees = snapshot.data!;
+                      return ListView(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        children: employees.map(buildEmployee).toList(),
+                      );
+                    } else if (!snapshot.hasData) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  } catch (e) {
+                    return SizedBox();
+                  }
+                }),
+          ],
         )));
   }
 }
+
+Stream<List<Employee>> readKaryawan() {
+  return FirebaseFirestore.instance
+      .collection('karyawan')
+      .snapshots()
+      .map((snapshot) {
+    return snapshot.docs.map((e) => Employee.fromJson(e.data())).toList();
+  });
+}
+
+Widget buildEmployee(Employee employee) => Container(
+      margin: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+          color: yellowColor, borderRadius: BorderRadius.circular(10)),
+      child: ListTile(
+        title: Text('Nama     : ' + employee.nama!),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('NIK             : ' + employee.nik!),
+            Text('Gaji Total : Rp' + employee.totalGaji.toString()),
+          ],
+        ),
+      ),
+    );

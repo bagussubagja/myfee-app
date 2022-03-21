@@ -54,20 +54,6 @@ class LoginScreen extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          Center(
-            child: Text(
-              'or',
-              style: primaryTextStyle,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          const LoginButton(
-            imgLogo: 'assets/images/twitter.png',
-            hintText: 'Sign In With Twitter',
-            widget: PageState(),
-          )
         ],
       ),
     )));
