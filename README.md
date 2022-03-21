@@ -4,8 +4,8 @@ MyFee adalah sebuah aplikasi yang diciptakan untuk tujuan memenuhi tugas matakul
 
 ## Aplikasi ini dibangun oleh framework Flutter
 
-Bagus Subagja - 2008315
-4B - Rekayasa Perangkat Lunak
-Universitas Pendidikan Indonesia
+Bagus Subagja - 2008315 <br />
+4B - Rekayasa Perangkat Lunak<br />
+Universitas Pendidikan Indonesia<br />
 Kampus UPI di Cibiru
 
